@@ -5,7 +5,8 @@ from pprint import pprint as PP
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--far", nargs=3, metavar=('PREFIX','PATH','REPLACEMENT'))
+parser.add_argument("--far", nargs=3, metavar=('PREFIX','PATH','REPLACEMENT'), help="Find and replace in list by prefix.")
+parser.add_argument("--dfl", nargs=3, metavar=('PREFIX','PATH','REPLACEMENT'), help="Drop from list by prefix.")
 parser.add_argument("--set", nargs=2, metavar=('PATH','VALUE'))
 parser.add_argument("-o", nargs=1, type=str, metavar="OUTFILE", default=['out.yml'])
 parser.add_argument("-i", action="store_true", help="Edit original file and ignore outfile even if set.")
@@ -35,10 +36,14 @@ def far(data, stk, p_str, r_str):
             list_root[i] = r_str
         i+=1
 
+def dfl(data, stk, p_str, r_str):
+    """Drop from list by prefix.
+    """
+    pass
+
 def yset(data, stk, v_str):
     root = _traverse_find(data, stk[:-1])
     root[stk[-1]] = v_str
-
 
 x = yaml.safe_load(open(filename_input, 'r'))
 
@@ -60,5 +65,3 @@ with open(filename_output, 'w') as f:
     f.write(yaml.safe_dump(x))
 
 sys.exit(0)
-
-far(x, ["service", "db", "env"], "A=", "A=ersetzt")
