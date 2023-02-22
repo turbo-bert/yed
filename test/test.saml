@@ -1,3 +1,6 @@
+other:
+- stuff
+and: so
 volumes:
   bla: null
   bla2: null

@@ -3,6 +3,17 @@
 
 source ~/src/github/yed/python/bin/activate
 
-python ../src/yed/__main__.py -i --unset volumes,bla test.yml
+rm -fr run
+mkdir run
 
-#python ../src/yed/__main__.py -i --addnull volumes,bla8 test.yml
+for saml in $(ls *.saml); do
+    cp -v $saml run/${saml%%.saml}.yaml
+done
+
+pushd .
+cd run
+python ../../src/yed/__main__.py -i --insert-yaml-file volumes test2.yaml test.yaml
+
+popd
+
+#python ../src/yed/__main__.py -i --unset volumes,bla test.yml
